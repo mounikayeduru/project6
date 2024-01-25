@@ -1,0 +1,197 @@
+<html>
+<head>
+    <title>sample project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+h1 {text-align: center;}
+</style>
+    </head>
+    <body>
+        <h2>Chapter 9. MultiSystem Manager Operation</h2>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;This chapter explains how to initialize MultiSystem Manager, start and stop MultiSystem Manager processing, and use the views and command support to manage your networks.</p>
+            <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Note: For specific information about the Open topology agent, see Chapter 10, “Open Topology Interface Network Operation,” on page 87. For specific information about the MultiSystem Manager IBM Tivoli Network Manager agent, see IBM Tivoli NetView for z/OS IP Management.</p>
+        <hr width="100%" size="1" color="black" noshade>
+        <h3>Getting Started</h3>
+         
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Before using MultiSystem Manager, ensure that the following steps are complete:</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp; You have completed the IBM Tivoli NetView for z/OS installation steps listed in the IBM Tivoli NetView for z/OS Installation: Configuring Graphical Components.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;You have created or modified the MultiSystem Manager initialization statements as described in IBM Tivoli NetView for z/OS Installation: Configuring Graphical Components.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;RODM is active, and the MultiSystem Manager data model is loaded.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;GMFHS and the NetView management console are active and operational for displaying graphic views.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The NetView RUNCMD task (DSIGDS) is active and operational to support RUNCMD commands if you are using SNA sessions. TCP/IP must be operational if you are using it.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The NetView SAVE/Restore task (DSISVRT) is active and operational to support the GETTOPO heartbeat function.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The AUTOMSM autotask is active.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The NetView hardware monitor is active.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The NetView automation table is active.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;For the MultiSystem Manager IBM Tivoli Network Manager agent, the NetView trap receiver task is active.
+ 
+</p>
+        <hr width="100%" size="1" color="black" noshade>
+        <h2>Navigating MultiSystem Manager Views</h2>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;After you initialize network topology and status in RODM, your NetView management console provides views of your MultiSystem Manager networks.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Using the NetView management console pull-down menus, you can navigate among the views to isolate failures and send commands to resolve problems. The following view navigation information is common to all MultiSystem Manager features.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Note: For navigation information for the Open topology agent, see Chapter 10, “Open Topology Interface Network Operation,” on page 87. For navigation information for the MultiSystem Manager IBM Tivoli Network Manager agent, see IBM Tivoli NetView for z/OS IP Management.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Common view navigation options are available across all MultiSystem Manager features. From an aggregate object, the More Detail and Configuration->Child navigations display resources that are contained in the aggregate object.
+Resource->More Detail shows just the immediate child resources.
+Resource->Configuration Child shows the immediate child resources and any lower-level (grandchild) resources. The Configuration->Parent navigation is also supported. This navigation option shows the selected object connected to all aggregate object parents of that object.
+To identify where a real network resource is managed by more than one topology agent, operators can select Configuration->Parent (on the context menu of the network resource object). Operators can use this to display a view that contains the parent of the resource or the path from a real resource to the host that owns it.
+This is useful for navigating between managed networks. It is also useful in identifying cases where your systems administrator has defined two agents to manage the same network resource.
+</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;To identify where a real network resource is managed by more than one topology agent, operators can select Configuration->Parent (on the context menu of the network resource object). Operators can use this to display a view that contains the parent of the resource or the path from a real resource to the host that owns it.
+This is useful for navigating between managed networks. It is also useful in identifying cases where your systems administrator has defined two agents to manage the same network resource.
+</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Operators can also select Configuration->Logical and Configuration->Physical (on the context menu of the network resource object) to view the logical and physical relationship between resources. However, dependent upon the configuration, these navigations might only re-display resources in the current view.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;As you navigate through your views, you can select any object and get resource information about that object. Each Resource Information window has the following fields:</p>
+        <h4>Resource name</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Name of the selected object.</p>
+        <h4>Other data</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Detailed information unique to the selected object.</p>
+        <h4>Type</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Class of view object representing the resource.</p>
+        <h4>Customer data</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Reserved for customer use</p>
+        <h4>Managed by</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Name of the MultiSystem Manager topology manager that manages this object.</p>
+        <h4>System status</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Status of the selected object and time status was last updated.</p>
+        <h4>Operator status</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Status initiated by operator, for example, if aggregation is suspended.</p>
+        <h4>Aggregation priority (real objects only)</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The number of exception status levels to be reported.</p>
+        <h4>Total resources (aggregate objects only)</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The number of resources contained in this aggregate.</p>
+        <h4>Unsatisfactory/Exception resources (aggregate objects only)The number of resources contained in this aggregate that have either unsatisfactory or exception status.</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The number of resources contained in this aggregate that have either unsatisfactory or exception status.</p>
+        <h4>Degraded (aggregate objects only)</h4>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The number of resources that must report exception status before the status of this aggregate is changed to degraded.</p>
+        <h4>Severely degraded (aggregate objects only)</h4>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The number of resources that must report exception status before the status of this aggregate is changed to severely degraded.</p>
+        <h4>Unsatisfactory (aggregate objects only)</h4>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The number of resources that must report exception status before the status of this aggregate is changed to unsatisfactory.</p>
+        <hr width="100%" size="1" color="black" noshade>
+        <h2>Topology Correlation Across Different Types of Networks</h2>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The IBM Tivoli NetView for z/OS program uses topology correlation to automatically tie together resources that are managed by different types of topology features (Open and IBM Tivoli Network Manager). Topology correlation is provided for all MultiSystem Manager topology features, the NetView SNA Topology Manager, and customer or vendor applications that use the GMFHS data model.Most managed resources participate in more than one network or system. For example, a workstation can serve as a station in an SNA network and a Windows platform, and be present in the IP environment. Most management agents recognize only one type of network or system, rather than recognizing every resource that is running in the system. The IBM Tivoli Network Manager agent, for example, recognizes only resources with an IP address. Therefore, an IP view of the example workstation contains information related to IP, but not the token ring adapter and Windows platform.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Most managed resources participate in more than one network or system. For example, a workstation can serve as a station in an SNA network and a Windows platform, and be present in the IP environment. Most management agents recognize only one type of network or system, rather than recognizing every resource that is running in the system. The IBM Tivoli Network Manager agent, for example, recognizes only resources with an IP address. Therefore, an IP view of the example workstation contains information related to IP, but not the token ring adapter and Windows platform.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Topology correlation overcomes the agent-specific perspective of management agents and can be used by a NetView management console operator to view all components of a network device. This single view includes the current status of all components.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Topology correlation is accomplished using a network address or a user-defined free-form string value (for example, Accounting or Australia).</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Network topology correlation automatically creates or updates correlated aggregate objects that can contain the following resource objects, if the corresponding topology feature is running for that type of resource:</p>
+        <ul>
+  <li>Vendor- or user-created Open Node and Node aggregate resources</li>
+  <li>SNATM PU resources</li>
+  <li>GMFHS managed real resources</li>
+</ul>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;You can include any resource in topology correlation by setting a free-form correlator value. This is useful when a resource is not automatically correlated because no IP address is discovered for it. It is also useful when you want to include managed objects in views that you define based upon organizational structure or geography. For example, if a customer or partner application specifies Australia for the field value on different managed resource objects in RODM, all of those objects are contained in one aggregate object with a display name of Australia. This object has a display type of Open System Aggregate.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;You can also use support for multiple values, in the free-form Correlator field, to create or locate a hierarchy of correlated aggregate objects that match your organizational structure. Figure 15 on page 80 is an example.</p>
+        <p style="text-align:left;"><img src="images/image1.jpg" alt="Image Description">
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;If a topology feature has both a free-form correlator string and a TCP/IP address for a managed resource, topology correlation typically creates just one correlated aggregate object and connects the resource to it.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;You can use topology correlation to isolate a failure that one managed system caused in a separately managed system. For example, operators can see that a TCP/IP failure caused a workstation in an open network to fail; they can then solve the problem in the IP network without further investigation of workstation software.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Topology correlation is an optional function that discovers correlations dynamically through RODM methods. To enable this function, your system administrator must include the FLCSDM8 file in the RODM structure load. Including SNA resources in correlation also requires a change to the FLBSYSD file. See the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide or the FLBSYSD file.</p>
+        
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;You can override correlation default display characteristics and you can include additional RODM objects in network or free-form topology correlation. All customization can be done in the FLCSDM8 RODM load file. See the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide for customization information.</p>
+        <h3>Customization Options</h3>
+        
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Figure 15 illustrates the result of free-form correlation of a multi-valued string. This string can be used to locate or create a hierarchy of correlated aggregate objects that match an organizational structure. When you set the Correlator field value on real RODM objects that are created and linked to the correlated aggregate objects in Figure 15, the Correlator field values set on the real RODM objects are shown in the following example:</p>
+        <p>Set ’NMP196’	Correlater ’Net_op united_states World’<br> Set ’tvt2017.tivlab.raleigh.ibm.com’	Correlater ’Op_Center Australia World’<br> Set ’ITNM.tvt2002.tivlab.raleigh.ibm.com’ Correlater ’Op_Center Australia World’<br> set ’tvt2007.tivlab.raleigh.ibm.com’	Correlater ’Op_Center Australia World’</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Topology correlation, by default, displays each correlated aggregate by its workstation name, if available. If a workstation name is not available, the next available name type on the Display Name Priority list is selected. However, you can select a different name type to display for all correlated aggregates by customizing the RODM Loader file FLCSDM8. Refer to the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide for the available customization options. Refer to the customization instructions in the FLCSDM8 file for customization instructions. Table 34 shows the default display name priority.</p>
+        <p style="text-align:left;"><img src="images/image2.jpg" alt="Image Description">
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;If a resource is correlated to an aggregate based upon a free-form value, the display name for the aggregate is the free-form string value.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The topology correlation method also enhances your ability to locate a correlated aggregate using the NetView management console locate function. Operators can locate a correlated aggregate using a value for any of the following network addresses, dependent upon what is discovered in your network:</p>
+        <ul>
+  <li>LAN MAC Address
+</li>
+  <li>IP Address</li>
+  <li>SNA PU or LU</li>
+            <li>IP Host name</li>
+            <li>Free-form correlator string</li>
+</ul>
+        <h3>Setting Free-Form Correlation Values</h3>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;You can set Correlator field values by using RODMView, by creating a command list (CLIST), or by creating a BLDVIEWS script. For more information, see the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;BLDVIEWS typically includes objects in views if those objects have a consistent naming scheme (for example, CPNRTR2 and CPNHST14) and builds the views hierarchically, from the top down.Multiple free-form correlation does not require objects to have a similar object naming. You can build views from the bottom up. By using topology correlation and BLDVIEWS together, it is easier to build custom views to match your enterprise than by using only BLDVIEWS.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;If RODM is recycled, you can restore your custom correlations by issuing a script from BLDVIEWS on z/OS. If you want to modify the script, you can edit it from z/OS/TSO.</p>
+        <h3>Issuing Commands</h3>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;MultiSystem Manager provides an easy-to-use command interface based on the NetView command support that you can use to select objects from your NetView management console views and issue commands to these objects without requiring you to enter the name or address of the object.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Generic commands (such as Current Status, Activate, Inactivate and Recycle) are not implemented by MultiSystem Manager. They can be implemented using the BLDVIEWS utility. For more information about BLDVIEWS, see the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;For example, to issue a command to an IP system:</p>
+        
+        <ol>
+        <li>Right-click on the system and select IP resource specific commands.</li>
+            <li>Select the command you want to issue.</li>
+        </ol>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Note: Responses to commands you issued using the command support are returned to the Command Responses window available from your NetView management console view under the Options pull-down menu. To display the window, select Show Log from the Options pull-down menu. To display the entire log, select Tear Away Log from the Options pull-down menu.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;For more information about messages that are displayed in the NetView management console Command Responses window, see the online help.</p>
+        <h3>Resolving Network Problems</h3>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;To resolve network problems, first locate the object in your view that is having the problem, as described in “Finding a Failing Object.” Then understand the meaning of the status of the object as described in “Understanding View Object Status” on page 83 to diagnose the problem and take the appropriate action.</p>
+        <h3>Finding a Failing Object</h3>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Suppose you are monitoring a MultiSystem Manager networks view, and you notice the network aggregate turns yellow, indicating a problem. To find the problem, you can do one of the following actions:</p>
+        <ul>
+        <li>Select the yellow aggregate object and then select More Detail and repeat this procedure until you find the failing resource.
+</li><li>Select an object and then select Locate Failing Resource. This function automatically builds a detailed view showing all real objects under the aggregate object that have unknown or unsatisfactory status.</li>
+        </ul>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;For information about locating failing resources in your views, see “Locate Failing Resources” on page 74.</p>
+        <h3>Finding the Status of an ObjectTo view alert information about the NetView management console, right-click on the object and select Event Viewer. The event viewer window shows the alerts received for that object.</h3>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;To view alert information about the NetView management console, right-click on the object and select Event Viewer. The event viewer window shows the alerts received for that object.</p>
+        <hr width="100%" size="1" color="black" noshade>
+        <h2>Understanding View Object Status</h2>
+        
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The status for both aggregate and real objects is displayed. The status of a real object reflects the operational capability in the network for that object. Table 35 shows a general description of real object status.</p>
+        <p style="text-align:left;"><img src="images/image3.jpg" alt="Image Description">
+            <h2>Setting Status Aggregation Thresholds</h2>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;The status for an aggregate object is derived or aggregated from the real resource objects that the aggregate object represents. The aggregation algorithm is based on the degraded, severely degraded, and unsatisfactory thresholds for each of the aggregate objects.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Setting aggregation is important. If the thresholds are set too high, failures are not seen on the high-level views that you are monitoring. If the thresholds are set too low, minor failures cause the status of the aggregate objects to have unsatisfactory status, which can hide major failures.</p>
+        <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;MultiSystem Manager sets default thresholds for each object type. You can use the defaults, or you can modify these thresholds by using NetView management console workstation menus or by changing the value of the threshold in RODM. See the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide for information about the GMFHS aggregation algorithm for aggregate objects.</p>
+        
+        
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Note: You can also set aggregation thresholds by using the view customization utility, BLDVIEWS. For information about BLDVIEWS, see the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide.</p>
+        <h2>Setting Aggregation Priorities</h2>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Aggregation priorities reflect the relative importance of a real object in your network. MultiSystem Manager sets a default aggregation priority for each type of real object in your view. You can use the defaults, or you can modify these aggregation priorities. To modify the aggregation priorities, use NetView management console workstation menus or change the value of the aggregation priority value in RODM. See the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide for information about the GMFHS aggregation algorithm for real objects.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Note: You can also set aggregation priorities by using the view customization utility, BLDVIEWS. For information about BLDVIEWS, see the IBM Tivoli NetView for z/OS Resource Object Data Manager and GMFHS Programmer's Guide.</p>
+        <hr width="100%" size="1" color="black" noshade>
+        <h2>Updating Topology and Status</h2>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;After the initial topology and status are stored in RODM, you can extend the set of managed resources by gathering topology and status for resources that were not previously managed. Use the GETTOPO command to get topology and status for specific resources or groups of resources. For example, if you are monitoring only the MultiSystem Manager IBM Tivoli Network Manager agent, you can issue a GETTOPO ITNMRES command to gather information about the resources that are managed by that agent.</p>
+        <hr width="100%" size="1" color="black" noshade>
+        <h2>Removing MultiSystem Manager Objects from Views</h2>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Under usual network operations, you might have objects in your views that you do not need to monitor. Perhaps you want to remove objects from a view because their status has been UNKNOWN or UNSATISFACTORY for an extended period of time. Any object that has had UNKNOWN or UNSATISFACTORY status for an extended period of time probably is no longer connected to your network, and can be removed from your views. You can remove objects from your views by one of the following methods:</p>
+       <ul><li>Issuing a command from the NetView operator command line
+
+</li><li>Scheduling a user-written command procedure to run as part of your automated network operations</li></ul>
+        <h2>Removing Objects Meeting Criteria</h2>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;MultiSystem Manager provides a command, REMVOBJS, to remove objects from your views if the objects meet certain criteria. This command can best be thought of as a cleanup routine. You can issue the REMVOBJS command against an aggregate object or a real object.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;When objects, both real and aggregate, are defined in RODM a Purge attribute is created for each object. This attribute defines whether the object can be removed from your views. The Purge attribute can be set as shown in Table 36.</p>
+        <p style="text-align:left;"><img src="images/image4.jpg" alt="Image Description">
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;An object is defined as being able to be purged if the Purge attribute is zero. When MultiSystem Manager creates a new object in RODM, the value of the Purge attribute for the object is set to zero. This enables the object to be removed. To prevent an object from being removed from your views, use the SETREMV command to change the value of the Purge attribute. For more information about the Purge attribute and using the SETREMV command, see the IBM Tivoli NetView for z/OS Command Reference Volume 1 (A-N) or online help.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;<b>Note:</b> The display of special connectivity relationships, such as in an IBM token-ring, might be affected by the removal of objects from the view. If the NetView management console does not display the view after the REMVOBJS command runs, you must rebuild the view by issuing the appropriate GETTOPO command.</p>
+        <h2>Removing Real Objects</h2>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Each real object must satisfy the following two criteria before it can be removed from your views:</p>
+        <ul><li> The object must be outdated, that is, it must have had UNKNOWN or UNSATISFACTORY status for a user-specified period of time.<br>
+–	When you issue the REMVOBJS command, specify whether you want to remove objects in UNKNOWN or in UNSATISFACTORY status.<br>
+–	When the command is issued, specify how long the objects to be removed can be in an UNKNOWN or UNSATISFACTORY status. If you do not specify a time period, the default is to remove objects after 1 day (24 hours).</li>
+<li> The object must be able to be purged; its Purge attribute is zero.</li>
+</ul>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;If the real object is both outdated and able to be purged, REMVOBJS removes the real object from your views. If neither or only one of the criteria are met, the real object is not removed.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;<b>Note:</b> The REMVOBJS command has completed successfully when all selected objects that are outdated and are able to be purged are removed. If no selected objects meet this criteria, the command still completes successfully, though no objects were removed.</p>
+        <h2>Removing Aggregate Objects</h2>
+        
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Each aggregate object must satisfy the following two criteria before it can be removed from your views:</p>
+        <ul><li>The aggregate object must be defined in RODM as being able to be purged; its Purge attribute is zero.
+
+</li>
+        <li>All the real objects included in the aggregate object must also meet the criteria to be removed (outdated and able to be purged).<br>
+If one or more of the real objects included in the aggregate object do not meet the criteria, the aggregate object is not removed.</li></ul>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;When you issue a REMVOBJS command against an aggregate object, MultiSystem Manager first checks to determine if the aggregate object itself can be purged. If it can be purged, MultiSystem Manager searches through RODM to determine if any of the real objects included in the aggregate object are outdated and can be purged. These real objects are then removed from your view. If all the real objects are removed, then the aggregate object is removed.</p>
+        <h2>Preventing an Object from Being Removed</h2>
+        
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;MultiSystem Manager provides a command, SETREMV, to change the Purge attribute of any MultiSystem Manager-created object. By changing the Purge attribute, you can prevent objects from being removed from your views.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;For more information about the SETREMV command, see the online help.</p>
+        <hr width="100%" size="1" color="black" noshade>
+        <h2>Using Online Help</h2>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;MultiSystem Manager provides online help for commands and messages. This help is available on your NetView management console and your NetView operator station task (OST). If you cannot access help, verify that the installation procedures were followed correctly.Help for the topology commands and all messages is available from the NetView command line. See the online help for more information about the NetView HELP command.</p>
+         <p style="text-align: justify;">&nbsp;&nbsp;&nbsp;&nbsp;Help for the topology commands and all messages is available from the NetView command line. See the online help for more information about the NetView HELP command.</p>
+        <ul><li>For information about a specific command, enter HELP command_name, where
+command_name is the name of the command such as GETTOPO ITNMRES.
+
+</li><li>For information about a specific message, enter HELP message_id, where
+message_id is the identifier of the message such as FLC000.</li></ul>
+</body>
+</html>
